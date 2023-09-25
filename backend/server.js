@@ -13,7 +13,9 @@ const app = express();
 app.use(express.json()); //to accept json data
 
 app.get("/", (req, res) => {
-  res.send("API is running...");
+  res.send(
+    "Project is under maintainance for bug fixes. Thank you for visiting!"
+  );
 });
 
 app.use("/api/user", userRoutes);
