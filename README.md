@@ -1,1 +1,1 @@
-# range - An Instant Chat Application
+# range - An Instant Chat Application - (Project In Progress)
