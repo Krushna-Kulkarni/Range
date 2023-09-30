@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ChatState } from "../context/ChatContext";
-import { Box, Button, Stack, Text, useToast } from "@chakra-ui/react";
+import { Box, Button, Spinner, Stack, Text, useToast } from "@chakra-ui/react";
 import axios from "axios";
 import { AddIcon } from "@chakra-ui/icons";
 import ChatLoading from "./ChatLoading";
@@ -87,7 +87,7 @@ const MyChats = ({ fetchAgain }) => {
         borderRadius="lg"
         overflowY="hidden"
       >
-        {!loading ? (
+        {chats ? (
           <Stack overflowY="scroll">
             {chats.map((chat) => (
               <Box
