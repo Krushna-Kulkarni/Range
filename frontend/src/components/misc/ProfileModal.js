@@ -59,7 +59,7 @@ const ProfileModal = ({ user, children }) => {
               fontSize={{ base: "28px", md: "30px" }}
               fontFamily="Work sans"
             >
-              {user.email}
+              Email: {user.email}
             </Text>
           </ModalBody>
 

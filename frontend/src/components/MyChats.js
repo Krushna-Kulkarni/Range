@@ -5,14 +5,17 @@ import axios from "axios";
 import { AddIcon } from "@chakra-ui/icons";
 import ChatLoading from "./ChatLoading";
 import { getSender } from "../config/ChatLogics";
+import GroupChatModal from "./misc/GroupChatModal";
 
-const MyChats = () => {
-  const [loggedUser, setLoggedUser] = useState("");
+const MyChats = ({ fetchAgain }) => {
   const { user, selectedChat, setSelectedChat, chats, setChats } = ChatState();
   const toast = useToast();
+  const [loggedUser, setLoggedUser] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const fetchChats = async () => {
     try {
+      setLoading(true);
       const config = {
         headers: {
           Authorization: `Bearer ${user.token}`,
@@ -20,8 +23,8 @@ const MyChats = () => {
       };
 
       const { data } = await axios.get("/api/chat", config);
-      console.log(data);
       setChats(data);
+      setLoading(false);
     } catch (error) {
       toast({
         title: "Error occured!",
@@ -31,13 +34,15 @@ const MyChats = () => {
         isClosable: true,
         position: "bottom-left",
       });
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     setLoggedUser(JSON.parse(localStorage.getItem("userInfo")));
+
     fetchChats();
-  }, []);
+  }, [fetchAgain]);
 
   return (
     <Box
@@ -61,13 +66,15 @@ const MyChats = () => {
         alignItems="center"
       >
         My Chats
-        <Button
-          display="flex"
-          fontSize={{ base: "17px", md: "10px", lg: "17px" }}
-          rightIcon={<AddIcon />}
-        >
-          New Group Chat
-        </Button>
+        <GroupChatModal>
+          <Button
+            display="flex"
+            fontSize={{ base: "17px", md: "10px", lg: "17px" }}
+            rightIcon={<AddIcon />}
+          >
+            New Group Chat
+          </Button>
+        </GroupChatModal>
       </Box>
 
       <Box
@@ -80,11 +87,9 @@ const MyChats = () => {
         borderRadius="lg"
         overflowY="hidden"
       >
-        {chats ? (
+        {!loading ? (
           <Stack overflowY="scroll">
             {chats.map((chat) => (
-              // console.log(chat.chatName);
-
               <Box
                 onClick={() => setSelectedChat(chat)}
                 cursor="pointer"
@@ -96,7 +101,7 @@ const MyChats = () => {
                 key={chat._id}
               >
                 <Text>
-                  {!chat.isChatGroup
+                  {!chat.isGroupChat
                     ? getSender(loggedUser, chat.users)
                     : chat.chatName}
                 </Text>
