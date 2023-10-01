@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { ChatState } from "../context/ChatContext";
 
 const HomePage = () => {
-  const { user, setUser } = ChatState();
+  const { setUser } = ChatState();
   const navigate = useNavigate();
 
   useEffect(() => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ChatState } from "../context/ChatContext";
-import { Box, Button, Spinner, Stack, Text, useToast } from "@chakra-ui/react";
+import { Box, Button, Stack, Text, useToast } from "@chakra-ui/react";
 import axios from "axios";
 import { AddIcon } from "@chakra-ui/icons";
 import ChatLoading from "./ChatLoading";
@@ -11,6 +11,7 @@ const MyChats = ({ fetchAgain }) => {
   const { user, selectedChat, setSelectedChat, chats, setChats } = ChatState();
   const toast = useToast();
   const [loggedUser, setLoggedUser] = useState("");
+  // eslint-disable-next-line
   const [loading, setLoading] = useState(false);
 
   const fetchChats = async () => {
@@ -42,6 +43,7 @@ const MyChats = ({ fetchAgain }) => {
     setLoggedUser(JSON.parse(localStorage.getItem("userInfo")));
 
     fetchChats();
+    // eslint-disable-next-line
   }, [fetchAgain]);
 
   return (
@@ -87,6 +89,7 @@ const MyChats = ({ fetchAgain }) => {
         borderRadius="lg"
         overflowY="hidden"
       >
+        {/* loading */}
         {chats ? (
           <Stack overflowY="scroll">
             {chats.map((chat) => (

@@ -38,7 +38,6 @@ const SideDrawer = () => {
 
   const {
     user,
-    selectedChat,
     setSelectedChat,
     chats,
     setChats,
