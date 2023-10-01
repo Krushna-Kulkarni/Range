@@ -1,11 +1,11 @@
 const express = require("express");
 const dotenv = require("dotenv");
-const { chats } = require("./data/data");
 const connectDB = require("./config/db");
 const userRoutes = require("./routes/userRoutes");
 const chatRoutes = require("./routes/chatRoutes");
 const messageRoutes = require("./routes/messageRoutes");
 const { notFound, errorHandler } = require("./middlewares/errorMiddleware");
+const path = require("path");
 
 dotenv.config();
 connectDB();
@@ -22,6 +22,26 @@ app.get("/", (req, res) => {
 app.use("/api/user", userRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/message", messageRoutes);
+
+// ----------------------- Deployment ------------------------
+
+const __dirname1 = path.resolve();
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname1, "/frontend/build")));
+
+  app.get("*", (req, res) =>
+    res.sendFile(path.resolve(__dirname1, "frontend", "build", "index.html"))
+  );
+} else {
+  app.get("/", (req, res) => {
+    res.send(
+      "Project is under maintainance for bug fixes. Thank you for visiting!"
+    );
+  });
+}
+
+// -----------------------------------------------------
 
 app.use(notFound);
 app.use(errorHandler);
