@@ -117,7 +117,7 @@ const Login = () => {
           marginTop: "15",
         }}
         onClick={() => {
-          setEmail("John@example.com");
+          setEmail("john@example.com");
           setPassword("john@123456");
         }}
       >
