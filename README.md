@@ -1,9 +1,5 @@
 # Range - An Instant Chat Application
 
-# Range
-
-Range is a Instant Chat App.
-
 ## Tech Stack
 
 **Client:** React JS
